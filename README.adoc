@@ -1,0 +1,30 @@
+= Obsidian Vault to Hugo Content
+
+. Clears hugo content directory (directory will be deleted and recreated)
+. Copies obsidian vault contents into hugo content directory
+. Replaces obsidian wiki links (`\[[wikilink]]`) with hugo links (`[wikilink]({{< ref "wikilink" >}})`)
+
+NOTE: For now, there is *no way to escape* obsidian wiki links. Every link will be replaced with a hugo link. The only way to get around this is changing the wiki link to don't match the exact sytax, for example by adding an invisible space `>​<` (Obsidian will highlight the invisible character as red dot). +
+image:do-not-do-that.png[] +
+However, this still is really really *not* best practice, so if anyone wants to implement real escaping, please do so.
+
+|===
+| Obsidian | Hugo
+
+| `[[/some/wiki/link]]`
+| `[/some/wiki/link]({{< ref "/some/wiki/link" >}})`
+
+| `[[/some/wiki/link\|Some text]]``
+| `[Some text]({{< ref "/some/wiki/link" >}})`
+
+| `[[/some/wiki/link/_index]]`
+| `[/some/wiki/link/]({{< ref "/some/wiki/link/" >}})`
+
+|===
+
+
+== Usage
+[source,sh]
+----
+python obsidian-to-hugo --obsidian-vault-dir=<path> --hugo-content-dir=<path>
+----
