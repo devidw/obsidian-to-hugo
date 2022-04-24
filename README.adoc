@@ -28,7 +28,7 @@ The program will take care of the following steps:
 
 NOTE: For now, there is *no way to escape* obsidian wiki links. Every link will be replaced with a hugo link. The only way to get around this is changing the wiki link to don't match the exact sytax, for example by adding an https://en.wikipedia.org/wiki/Zero-width_space[invisible space] `>​<` (Obsidian will highlight the invisible character as red dot). +
 image:do-not-do-that.png[] +
-However, this still is really really *not* best practice, so if anyone wants to implement real escaping, please do so.
+However, this still is really really *not* best practice, so if anyone wants to implement real escaping, https://github.com/devidw/obsidian-to-hugo/pulls[please do so].
 
 
 == Usage
