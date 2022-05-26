@@ -1,4 +1,12 @@
 = Obsidian Vault to Hugo Content
+:toc:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 A simple CLI written in Python to help us publish https://obsidian.md[obsidian] notes with https://gohugo.io[hugo]. 
 
