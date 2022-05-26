@@ -1,5 +1,5 @@
 = Obsidian Vault to Hugo Content
-:toc:
+// toc
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -42,5 +42,17 @@ However, this still is really really *not* best practice, so if anyone wants to 
 == Usage
 [source,sh]
 ----
-python obsidian-to-hugo --obsidian-vault-dir=<path> --hugo-content-dir=<path>
+python path/to/obsidian-to-hugo/src --obsidian-vault-dir=<path> --hugo-content-dir=<path>
+----
+
+[source,sh]
+----
+usage: src [-h] [--hugo-content-dir HUGO_CONTENT_DIR] [--obsidian-vault-dir OBSIDIAN_VAULT_DIR]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --hugo-content-dir HUGO_CONTENT_DIR
+                        The hugo content directory path, the obsidian contents get placed.
+  --obsidian-vault-dir OBSIDIAN_VAULT_DIR
+                        The directory of the Obsidian vault you would like to process.
 ----
