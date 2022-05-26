@@ -12,6 +12,11 @@ A simple CLI written in Python to help us publish https://obsidian.md[obsidian] 
 
 It only takes two arguments: The obsidian vault directory (`--obsidian-vault-dir`) and the hugo content directory (`--hugo-content-dir`).
 
+[source,sh]
+----
+python path/to/obsidian-to-hugo/src --obsidian-vault-dir=<path> --hugo-content-dir=<path>
+----
+
 The program will take care of the following steps:
 
 . Clears hugo content directory (directory will be deleted and recreated)
@@ -31,7 +36,6 @@ The program will take care of the following steps:
 
 | `[[/some/wiki/link/_index]]`
 | `[/some/wiki/link/]({{< ref "/some/wiki/link/" >}})`
-
 |===
 
 NOTE: For now, there is *no way to escape* obsidian wiki links. Every link will be replaced with a hugo link. The only way to get around this is changing the wiki link to don't match the exact sytax, for example by adding an https://en.wikipedia.org/wiki/Zero-width_space[invisible space] `>​<` (Obsidian will highlight the invisible character as red dot). +
@@ -42,12 +46,7 @@ However, this still is really really *not* best practice, so if anyone wants to 
 == Usage
 [source,sh]
 ----
-python path/to/obsidian-to-hugo/src --obsidian-vault-dir=<path> --hugo-content-dir=<path>
-----
-
-[source,sh]
-----
-usage: src [-h] [--hugo-content-dir HUGO_CONTENT_DIR] [--obsidian-vault-dir OBSIDIAN_VAULT_DIR]
+usage: path/to/obsidian-to-hugo/src [-h] [--hugo-content-dir HUGO_CONTENT_DIR] [--obsidian-vault-dir OBSIDIAN_VAULT_DIR]
 
 optional arguments:
   -h, --help            show this help message and exit
