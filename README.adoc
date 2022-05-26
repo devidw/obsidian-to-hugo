@@ -1,5 +1,5 @@
 = Obsidian Vault to Hugo Content
-:toc:
+// :toc:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
