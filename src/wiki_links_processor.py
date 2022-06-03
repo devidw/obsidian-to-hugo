@@ -1,4 +1,5 @@
-"""Utilities to extract wiki links from text and turn them into hugo links.
+"""
+Utilities to extract wiki links from text and turn them into hugo links.
 """
 
 import re
