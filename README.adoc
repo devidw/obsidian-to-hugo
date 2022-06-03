@@ -53,7 +53,7 @@ usage: path/to/obsidian-to-hugo/src [-h] [--hugo-content-dir HUGO_CONTENT_DIR] [
 optional arguments:
   -h, --help            show this help message and exit
   --hugo-content-dir HUGO_CONTENT_DIR
-                        Directory of your hugo content directory, the obsidian notes should be processed into.
+                        Directory of your Hugo content directory, the obsidian notes should be processed into.
   --obsidian-vault-dir OBSIDIAN_VAULT_DIR
                         Directory of the Obsidian vault, the notes should be processed from.
 ----
