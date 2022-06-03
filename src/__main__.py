@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "--hugo-content-dir",
-    help="Directory of your hugo content directory, the obsidian notes should be processed into.",
+    help="Directory of your Hugo content directory, the obsidian notes should be processed into.",
     type=str,
 )
 
