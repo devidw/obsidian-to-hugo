@@ -1,6 +1,7 @@
 """
 Utilities to process obsidian notes and convert them to hugo ready content files.
 """
+
 import os
 import shutil
 from distutils.dir_util import copy_tree
