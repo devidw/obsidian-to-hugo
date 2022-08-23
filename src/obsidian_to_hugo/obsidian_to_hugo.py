@@ -5,10 +5,14 @@ Utilities to process obsidian notes and convert them to hugo ready content files
 import os
 import shutil
 from distutils.dir_util import copy_tree
-from wiki_links_processor import replace_wiki_links_helper
+from .wiki_links_processor import replace_wiki_links_helper
 
 
 class ObsidianToHugo:
+    """
+    Process the obsidian vault and convert it to hugo ready content.
+    """
+
     def __init__(
         self,
         obsidian_vault_dir: str,
@@ -19,7 +23,9 @@ class ObsidianToHugo:
 
     def process(self) -> None:
         """
-        Delete the hugo content directory and copy the obsidian vault to the hugo content directory, then process the content so that the wiki links are replaced with the hugo links.
+        Delete the hugo content directory and copy the obsidian vault to the
+        hugo content directory, then process the content so that the wiki links
+        are replaced with the hugo links.
         """
         self.clear_hugo_content_dir()
         self.copy_obsidian_vault_to_hugo_content_dir()
@@ -44,13 +50,14 @@ class ObsidianToHugo:
 
     def process_content(self) -> None:
         """
-        Looping through all files in the hugo content directory and replace the wiki links of each matching file.
+        Looping through all files in the hugo content directory and replace the
+        wiki links of each matching file.
         """
         for root, dirs, files in os.walk(self.hugo_content_dir):
             for file in files:
                 if file.endswith(".md"):
-                    with open(os.path.join(root, file), "r") as f:
+                    with open(os.path.join(root, file), "r", encoding="utf-8") as f:
                         text = f.read()
                     text = replace_wiki_links_helper(text)
-                    with open(os.path.join(root, file), "w") as f:
+                    with open(os.path.join(root, file), "w", encoding="utf-8") as f:
                         f.write(text)

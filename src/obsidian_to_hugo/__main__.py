@@ -1,6 +1,10 @@
+"""
+Obsidian to Hugo CLI
+"""
+
 import argparse
 import os
-from obsidian_to_hugo import ObsidianToHugo
+from .obsidian_to_hugo import ObsidianToHugo
 
 __version__ = "0.1.0"
 
@@ -18,10 +22,11 @@ parser.add_argument(
     type=str,
 )
 
-args = parser.parse_args()
 
-
-def main(parser: argparse.ArgumentParser) -> None:
+def main() -> None:
+    """
+    Main entry point of the CLI.
+    """
     args = parser.parse_args()
     if not args.hugo_content_dir or not os.path.isdir(args.hugo_content_dir):
         parser.error("The hugo content directory does not exist.")
@@ -35,4 +40,4 @@ def main(parser: argparse.ArgumentParser) -> None:
 
 
 if __name__ == "__main__":
-    main(parser)
+    main()

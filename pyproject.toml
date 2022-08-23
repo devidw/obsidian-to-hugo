@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "obsidian_to_hugo"
+version = "0.1.0"
+description = "Process Obsidian notes to publish them with Hugo. Transforms Obsidian wiki links into Hugo shortcodes for internal linking."
+readme = "README.md"
+requires-python = ">=3.6"
+license = { text = "MIT" }
+keywords = ["obsidian", "hugo", "markdown", "wikilink"]
+authors = [{ name = "David Wolf", email = "d@wolf.gdn" }]
+classifiers = [
+  "Typing :: Typed",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Text Processing :: Markup",
+]
+
+[project.urls]
+"Source" = "https://github.com/devidw/obsidian-to-hugo"
+"Bug Tracker" = "https://github.com/devidw/obsidian-to-hugo/issues"

@@ -1,5 +1,5 @@
 import unittest
-import wiki_links_processor
+from obsidian_to_hugo import wiki_links_processor
 
 
 class TestWikiLinksProcessor(unittest.TestCase):
