@@ -57,3 +57,9 @@ optional arguments:
   --obsidian-vault-dir OBSIDIAN_VAULT_DIR
                         Directory of the Obsidian vault, the notes should be processed from.
 ----
+
++++
+<p align=center>
+<img src="img/gopher-obsidian.png"
+</p>
++++
