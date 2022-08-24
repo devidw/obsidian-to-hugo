@@ -41,7 +41,7 @@ It takes care of the following steps:
 ## Installation
 
 ```console
-pip install obsidian_to_hugo
+pip install obsidian-to-hugo
 ```
 
 
