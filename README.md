@@ -4,6 +4,12 @@
 Obsidian Vault to Hugo Content
 </h1>
 
+<p align="center">
+<a href="https://obsidian-to-hugo.wolf.gdn" target="_blank">
+<img src="https://raw.githubusercontent.com/devidw/obsidian-to-hugo/master/img/demo.gif">
+</a>
+</p>
+
 Lightweight, zero-dependency CLI written in Python to help us publish [obsidian](https://obsidian.md) notes with [hugo](https://gohugo.io). 
 
 It only takes two arguments: The obsidian vault directory (`--obsidian-vault-dir`) and the hugo content directory (`--hugo-content-dir`).
