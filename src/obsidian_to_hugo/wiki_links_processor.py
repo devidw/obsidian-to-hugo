@@ -39,7 +39,13 @@ def build_hugo_links(links: list) -> list:
     Extends the passed wiki links list by adding a dict key for the hugo link.
     """
     for link in links:
-        link["hugo_link"] = f'[{link["text"]}]({{{{< ref "{link["link"]}" >}}}})'
+        # if the links contains a link to a header, convert the header part to lower case and replace spaces by minus
+        link_seperated = link["link"].split("#", 1)
+        if len(link_seperated) > 1:
+            link_combined = "#".join([link_seperated[0], link_seperated[1].lower().replace(" ", "-")])
+        else:
+            link_combined = link["link"]
+        link["hugo_link"] = f'[{link["text"]}]({{{{< ref "{link_combined}" >}}}})'
     return links
 
 
