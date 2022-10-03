@@ -31,7 +31,8 @@
 				"GitHub.copilot",
 				"bungcip.better-toml",
 				"tamasfe.even-better-toml",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"cschleiden.vscode-github-actions"
 			]
 		}
 	},
