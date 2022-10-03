@@ -36,7 +36,7 @@ def get_wiki_links(text: str) -> list:
 
 def build_hugo_links(links: list) -> list:
     """
-    Extens the passed wiki links list by adding a dict key for the hugo link.
+    Extends the passed wiki links list by adding a dict key for the hugo link.
     """
     for link in links:
         link["hugo_link"] = f'[{link["text"]}]({{{{< ref "{link["link"]}" >}}}})'
