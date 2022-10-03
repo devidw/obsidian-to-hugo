@@ -2,10 +2,14 @@
 Utilities to extract wiki links from text and turn them into hugo links.
 """
 
+from typing import TypedDict
 import re
 
 
-def get_wiki_links(text: str) -> list:
+WikiLink = TypedDict("WikiLink", {"wiki_link": str, "link": str, "text": str})
+
+
+def get_wiki_links(text: str) -> list[WikiLink]:
     """
     Get all wiki links from the given text and return a list of them.
     Each list item is a dictionary with the following keys:
@@ -34,34 +38,29 @@ def get_wiki_links(text: str) -> list:
     return wiki_links
 
 
-def build_hugo_links(links: list) -> list:
+def wiki_link_to_hugo_link(wiki_link: WikiLink) -> str:
     """
-    Extends the passed wiki links list by adding a dict key for the hugo link.
+    Convert the wiki link into a hugo link.
     """
-    for link in links:
-        # if the links contains a link to a header, convert the header part to lower case and replace spaces by minus
-        link_seperated = link["link"].split("#", 1)
-        if len(link_seperated) > 1:
-            link_combined = "#".join([link_seperated[0], link_seperated[1].lower().replace(" ", "-")])
-        else:
-            link_combined = link["link"]
-        link["hugo_link"] = f'[{link["text"]}]({{{{< ref "{link_combined}" >}}}})'
-    return links
+    # if the links contains a link to a heading, convert the heading part to
+    # lower case and replace spaces by minus
+    link_seperated = wiki_link["link"].split("#", 1)
+    if len(link_seperated) > 1:
+        link_combined = "#".join(
+            [link_seperated[0], link_seperated[1].lower().replace(" ", "-")]
+        )
+    else:
+        link_combined = wiki_link["link"]
+    hugo_link = f'[{wiki_link["text"]}]({{{{< ref "{link_combined}" >}}}})'
+    return hugo_link
 
 
-def replace_wiki_links(text: str, links: list) -> str:
+def replace_wiki_links(text: str) -> str:
     """
-    Replace all wiki links with hugo links in the given text.
-    """
-    for link in links:
-        text = text.replace(link["wiki_link"], link["hugo_link"])
-    return text
-
-
-def replace_wiki_links_helper(text: str) -> str:
-    """
-    Helper function for replace_wiki_links.
+    Replace all wiki links in the given text with hugo links.
     """
     links = get_wiki_links(text)
-    links = build_hugo_links(links)
-    return replace_wiki_links(text, links)
+    for link in links:
+        hugo_link = wiki_link_to_hugo_link(link)
+        text = text.replace(link["wiki_link"], hugo_link)
+    return text

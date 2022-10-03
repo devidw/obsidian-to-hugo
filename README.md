@@ -33,6 +33,7 @@ It takes care of the following steps:
 | `[[/some/wiki/link]]` | `[/some/wiki/link]({{< ref "/some/wiki/link" >}})`
 | `[[/some/wiki/link\|Some text]]` | `[Some text]({{< ref "/some/wiki/link" >}})`
 | `[[/some/wiki/link/_index]]` | `[/some/wiki/link/]({{< ref "/some/wiki/link/" >}})`
+| `[[/some/wiki/link#Some Heading\|Some Heading Link]]` | `[Some Heading Link]({{< ref "/some/wiki/link#some-heading" >}})`
 
 > NOTE: For now, there is *no way to escape* obsidian wiki links. Every link
 > will be replaced with a hugo link. The only way to get around this is changing

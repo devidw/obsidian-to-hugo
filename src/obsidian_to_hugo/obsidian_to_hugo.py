@@ -5,7 +5,7 @@ Utilities to process obsidian notes and convert them to hugo ready content files
 import os
 import shutil
 from distutils.dir_util import copy_tree
-from .wiki_links_processor import replace_wiki_links_helper
+from .wiki_links_processor import replace_wiki_links
 
 
 class ObsidianToHugo:
@@ -58,6 +58,6 @@ class ObsidianToHugo:
                 if file.endswith(".md"):
                     with open(os.path.join(root, file), "r", encoding="utf-8") as f:
                         text = f.read()
-                    text = replace_wiki_links_helper(text)
+                    text = replace_wiki_links(text)
                     with open(os.path.join(root, file), "w", encoding="utf-8") as f:
                         f.write(text)
