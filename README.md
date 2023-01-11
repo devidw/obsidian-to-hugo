@@ -35,7 +35,7 @@ It takes care of the following steps:
 | `[[/some/wiki/link\|Some text]]` | `[Some text]({{< ref "/some/wiki/link" >}})`
 | `[[/some/wiki/link/_index]]` | `[/some/wiki/link/]({{< ref "/some/wiki/link/" >}})`
 | `[[/some/wiki/link#Some Heading\|Some Heading Link]]` | `[Some Heading Link]({{< ref "/some/wiki/link#some-heading" >}})`
-| `==foo bar===` | `foo bar`
+| `==foo bar===` | `<mark>foo bar</mark>`
 
 > **Note**
 > For now, there is *no way to escape* obsidian wiki links. Every link
