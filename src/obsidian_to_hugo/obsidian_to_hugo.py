@@ -6,6 +6,7 @@ import os
 import shutil
 from distutils.dir_util import copy_tree
 from .wiki_links_processor import replace_wiki_links
+from .md_mark_processor import replace_md_marks
 
 
 class ObsidianToHugo:
@@ -58,6 +59,6 @@ class ObsidianToHugo:
                 if file.endswith(".md"):
                     with open(os.path.join(root, file), "r", encoding="utf-8") as f:
                         text = f.read()
-                    text = replace_wiki_links(text)
+                    text = replace_md_marks(replace_wiki_links(text))
                     with open(os.path.join(root, file), "w", encoding="utf-8") as f:
                         f.write(text)

@@ -1,8 +1,21 @@
 import unittest
 from obsidian_to_hugo import wiki_links_processor
+from obsidian_to_hugo import md_mark_processor
 
 
 class TestWikiLinksProcessor(unittest.TestCase):
+    def test_get_marks(self):
+        text = "==foo bar=="
+        marks = md_mark_processor.get_md_marks(text)
+        self.assertEqual(len(marks), 1)
+        self.assertEqual(
+            marks[0],
+            {
+                "md_mark": "==foo bar==",
+                "text": "foo bar",
+            },
+        )
+
     def test_get_wiki_links(self):
         text = "[[foo]] [[bar|baz]]"
         links = wiki_links_processor.get_wiki_links(text)
@@ -44,6 +57,11 @@ class TestWikiLinksProcessor(unittest.TestCase):
         hugo_link = wiki_links_processor.wiki_link_to_hugo_link(wiki_link)
         self.assertEqual(hugo_link, '[baz]({{< ref "bar#foo-bar" >}})')
 
+    def test_convert_md_mark(self):
+        md_mark = md_mark_processor.get_md_marks("==foo bar==")[0]
+        html_mark = md_mark_processor.md_marks_to_html_marks(md_mark)
+        self.assertEqual(html_mark, '<mark>foo bar</mark>')
+
     def test_replace_wiki_links(self):
         real_in = """
         [[foo]]
@@ -58,6 +76,12 @@ class TestWikiLinksProcessor(unittest.TestCase):
         [baz]({{< ref "bar#foo-bar" >}})
         """
         real_out = wiki_links_processor.replace_wiki_links(real_in)
+        self.assertEqual(real_out, expected_out)
+
+    def test_replace_marks(self):
+        real_in = "==foo bar=="
+        expected_out = "<mark>foo bar</mark>"
+        real_out = md_mark_processor.replace_md_marks(real_in)
         self.assertEqual(real_out, expected_out)
 
 
