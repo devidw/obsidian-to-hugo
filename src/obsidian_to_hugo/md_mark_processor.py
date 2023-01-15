@@ -17,7 +17,7 @@ def get_md_marks(text: str) -> list[Mark]:
     - text: the extracted text
     """
     md_marks = []
-    md_marks_regex = r"==(.*?)=="
+    md_marks_regex = r"==([^=\n]+)=="
     for match in re.finditer(md_marks_regex, text):
         out = {
             "md_mark": match.group(),
