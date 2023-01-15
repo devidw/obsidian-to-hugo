@@ -10,7 +10,7 @@ Obsidian Vault to Hugo Content
 </a>
 </p>
 
-Lightweight, zero-dependency CLI written in Python to help us publish [obsidian](https://obsidian.md) notes with [hugo](https://gohugo.io). 
+Lightweight, extensible, zero-dependency CLI written in Python to help us publish [obsidian](https://obsidian.md) notes with [hugo](https://gohugo.io). 
 
 It only takes two arguments: The obsidian vault directory (`--obsidian-vault-dir`) and the hugo content directory (`--hugo-content-dir`).
 
@@ -22,8 +22,11 @@ It takes care of the following steps:
 
 - Clears hugo content directory (directory will be deleted and recreated)
 - Copies obsidian vault contents into hugo content directory (`.obsidian` gets removed immediately after copying)
-- Replaces obsidian wiki links (`[[wikilink]]`) with hugo shortcode links (`[wikilink]({{< ref "wikilink" >}})`)
+- Replaces obsidian wiki links (`[[wikilink]]`) with hugo shortcode links
+  (`[wikilink]({{< ref "wikilink" >}})`)
 - replace obsidian marks (`==important==`) with html marks (`<mark>important</mark>`)
+- Want to do more? You can write and register custom processors to do whatever
+  you want with the file contents. See [Processors](#processors) for more
 
 
 ## Replacement examples
@@ -58,12 +61,56 @@ pip install obsidian-to-hugo
 ## Usage
 
 ```console
-usage: __main__.py [-h] [--hugo-content-dir HUGO_CONTENT_DIR] [--obsidian-vault-dir OBSIDIAN_VAULT_DIR]
+usage: __main__.py [-h] [--version] [--hugo-content-dir HUGO_CONTENT_DIR]
+                   [--obsidian-vault-dir OBSIDIAN_VAULT_DIR]
 
 options:
   -h, --help            show this help message and exit
+  --version, -v         Show the version and exit.
   --hugo-content-dir HUGO_CONTENT_DIR
-                        Directory of your Hugo content directory, the obsidian notes should be processed into.
+                        Directory of your Hugo content directory, the obsidian notes
+                        should be processed into.
   --obsidian-vault-dir OBSIDIAN_VAULT_DIR
-                        Directory of the Obsidian vault, the notes should be processed from.
+                        Directory of the Obsidian vault, the notes should be processed
+                        from.
+```
+
+## Python API
+
+```python
+from obsidian_to_hugo import ObsidianToHugo
+
+obsidian_to_hugo = ObsidianToHugo(
+    obsidian_vault_dir="path/to/obsidian/vault",
+    hugo_content_dir="path/to/hugo/content",
+)
+
+obsidian_to_hugo.run()
+```
+
+### Processors
+
+You can pass an optional `processors` argument to the `ObsidianToHugo`
+constructor. This argument should be a list of functions.
+
+The function will be invoked for each file from the obsidian vault that is
+copied into the hugo content directory. It will be passed the file contents
+as string, and should return the processed version of the file contents.
+
+Custom processors are invoked after the default processing of the file contents.
+
+```python
+from obsidian_to_hugo import ObsidianToHugo
+
+def process_file(file_contents: str) -> str:
+    # do something with the file contents
+    return file_contents
+
+obsidian_to_hugo = ObsidianToHugo(
+    obsidian_vault_dir="path/to/obsidian/vault",
+    hugo_content_dir="path/to/hugo/content",
+    processors=[process_file],
+)
+
+obsidian_to_hugo.run()
 ```
