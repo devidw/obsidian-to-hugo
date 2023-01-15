@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "obsidian_to_hugo"
-version = "0.2.0"
+version = "0.3.0"
 description = "Process Obsidian notes to publish them with Hugo. Transforms Obsidian wiki links into Hugo shortcodes for internal linking."
 readme = "README.md"
 requires-python = ">=3.6"

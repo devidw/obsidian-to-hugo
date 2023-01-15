@@ -17,11 +17,15 @@ class ObsidianToHugo:
         self,
         obsidian_vault_dir: str,
         hugo_content_dir: str,
+        processors: list = None,
     ) -> None:
+        self.processors = [replace_wiki_links]
+        if processors:
+            self.processors.extend(processors)
         self.obsidian_vault_dir = obsidian_vault_dir
         self.hugo_content_dir = hugo_content_dir
 
-    def process(self) -> None:
+    def run(self) -> None:
         """
         Delete the hugo content directory and copy the obsidian vault to the
         hugo content directory, then process the content so that the wiki links
@@ -44,7 +48,8 @@ class ObsidianToHugo:
         Copy all files and directories from the obsidian vault to the hugo content directory.
         """
         copy_tree(self.obsidian_vault_dir, self.hugo_content_dir)
-        # We don't want to have the .obsidian folder in the hugo content directory.
+        # We don't want to have the .obsidian folder in the hugo content
+        # directory.
         if os.path.isdir(os.path.join(self.hugo_content_dir, ".obsidian")):
             shutil.rmtree(os.path.join(self.hugo_content_dir, ".obsidian"))
 
@@ -58,6 +63,7 @@ class ObsidianToHugo:
                 if file.endswith(".md"):
                     with open(os.path.join(root, file), "r", encoding="utf-8") as f:
                         text = f.read()
-                    text = replace_wiki_links(text)
+                    for processor in self.processors:
+                        text = processor(text)
                     with open(os.path.join(root, file), "w", encoding="utf-8") as f:
                         f.write(text)

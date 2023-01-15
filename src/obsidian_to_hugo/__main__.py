@@ -6,9 +6,17 @@ import argparse
 import os
 from .obsidian_to_hugo import ObsidianToHugo
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--version",
+    "-v",
+    action="version",
+    version=f"obsidian-to-hugo {__version__}",
+    help="Show the version and exit.",
+)
 
 parser.add_argument(
     "--hugo-content-dir",
@@ -36,7 +44,7 @@ def main() -> None:
         obsidian_vault_dir=args.obsidian_vault_dir,
         hugo_content_dir=args.hugo_content_dir,
     )
-    obsidian_to_hugo.process()
+    obsidian_to_hugo.run()
 
 
 if __name__ == "__main__":

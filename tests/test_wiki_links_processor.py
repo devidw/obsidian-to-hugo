@@ -2,7 +2,7 @@ import unittest
 from obsidian_to_hugo import wiki_links_processor
 
 
-class TestWikiLinksProcessor(unittest.TestCase):
+class WikiLinksProcessorTestCase(unittest.TestCase):
     def test_get_wiki_links(self):
         text = "[[foo]] [[bar|baz]]"
         links = wiki_links_processor.get_wiki_links(text)
