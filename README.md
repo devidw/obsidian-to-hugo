@@ -24,7 +24,7 @@ It takes care of the following steps:
 - Copies obsidian vault contents into hugo content directory (`.obsidian` gets removed immediately after copying)
 - Replaces obsidian wiki links (`[[wikilink]]`) with hugo shortcode links
   (`[wikilink]({{< ref "wikilink" >}})`)
-- replace obsidian marks (`==important==`) with html marks (`<mark>important</mark>`)
+- Replaces obsidian marks (`==important==`) with html marks (`<mark>important</mark>`)
 - Want to do more? You can write and register custom processors to do whatever
   you want with the file contents. See [Processors](#processors) for more
 
