@@ -18,7 +18,14 @@ build_dist:
 	python3 -m build
 
 upload_test: build_dist
-	python3 -m twine upload --repository testpypi dist/*
+	python3 -m twine upload \
+		--repository testpypi \
+		--username __token__ \
+		--password $(PYPI_TEST_TOKEN) \
+		dist/*
 
 upload: build_dist
-	python3 -m twine upload dist/* -u __token__ -p $(PYPI_TOKEN)
+	python3 -m twine upload \
+		--username __token__ \
+		--password $(PYPI_TOKEN) \
+		dist/*
