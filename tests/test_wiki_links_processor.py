@@ -62,7 +62,7 @@ class WikiLinksProcessorTestCase(unittest.TestCase):
         self.assertEqual(real_out, expected_out)
 
 
-class TestMarksProcessor(unittest.TestCase):
+class MarksProcessorTestCase(unittest.TestCase):
     def test_get_md_marks(self):
         text = "==foo bar=="
         marks = md_mark_processor.get_md_marks(text)
