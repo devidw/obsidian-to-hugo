@@ -24,6 +24,7 @@ It takes care of the following steps:
 - Copies obsidian vault contents into hugo content directory (`.obsidian` gets removed immediately after copying)
 - Replaces obsidian wiki links (`[[wikilink]]`) with hugo shortcode links
   (`[wikilink]({{< ref "wikilink" >}})`)
+- Replaces obsidian marks (`==important==`) with html marks (`<mark>important</mark>`)
 - Want to do more? You can write and register custom processors to do whatever
   you want with the file contents. See [Processors](#processors) for more
 
@@ -37,6 +38,7 @@ It takes care of the following steps:
 | `[[/some/wiki/link\|Some text]]` | `[Some text]({{< ref "/some/wiki/link" >}})`
 | `[[/some/wiki/link/_index]]` | `[/some/wiki/link/]({{< ref "/some/wiki/link/" >}})`
 | `[[/some/wiki/link#Some Heading\|Some Heading Link]]` | `[Some Heading Link]({{< ref "/some/wiki/link#some-heading" >}})`
+| `==foo bar===` | `<mark>foo bar</mark>`
 
 > **Note**
 > For now, there is *no way to escape* obsidian wiki links. Every link

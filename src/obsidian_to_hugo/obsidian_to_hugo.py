@@ -6,6 +6,7 @@ import os
 import shutil
 from distutils.dir_util import copy_tree
 from .wiki_links_processor import replace_wiki_links
+from .md_mark_processor import replace_md_marks
 
 
 class ObsidianToHugo:
@@ -19,7 +20,7 @@ class ObsidianToHugo:
         hugo_content_dir: str,
         processors: list = None,
     ) -> None:
-        self.processors = [replace_wiki_links]
+        self.processors = [replace_wiki_links, replace_md_marks]
         if processors:
             self.processors.extend(processors)
         self.obsidian_vault_dir = obsidian_vault_dir

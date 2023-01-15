@@ -32,7 +32,7 @@ class CLITestCase(unittest.TestCase):
     
     def test_custom_processor(self):
       """
-      Instanstiate with custom procoessor function and test it 
+      Instantiate with custom processor function and test it 
       """
       def custom_processor(text: str) -> str:
         return text.replace("abc", "xyz")
