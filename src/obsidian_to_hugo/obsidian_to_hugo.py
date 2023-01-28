@@ -3,8 +3,7 @@ Utilities to process obsidian notes and convert them to hugo ready content files
 """
 
 import os
-import shutil
-from distutils.dir_util import copy_tree
+from shutil import rmtree, copytree, ignore_patterns
 from .wiki_links_processor import replace_wiki_links
 from .md_mark_processor import replace_md_marks
 
@@ -19,12 +18,16 @@ class ObsidianToHugo:
         obsidian_vault_dir: str,
         hugo_content_dir: str,
         processors: list = None,
+        filters: list = None,
     ) -> None:
-        self.processors = [replace_wiki_links, replace_md_marks]
-        if processors:
-            self.processors.extend(processors)
         self.obsidian_vault_dir = obsidian_vault_dir
         self.hugo_content_dir = hugo_content_dir
+        self.processors = [replace_wiki_links, replace_md_marks]
+        self.filters = []
+        if processors:
+            self.processors.extend(processors)
+        if filters:
+            self.filters.extend(filters)
 
     def run(self) -> None:
         """
@@ -41,18 +44,13 @@ class ObsidianToHugo:
         Delete the whole content directory.
         NOTE: The folder itself gets deleted and recreated.
         """
-        shutil.rmtree(self.hugo_content_dir)
-        os.mkdir(self.hugo_content_dir)
+        rmtree(self.hugo_content_dir)
 
     def copy_obsidian_vault_to_hugo_content_dir(self) -> None:
         """
         Copy all files and directories from the obsidian vault to the hugo content directory.
         """
-        copy_tree(self.obsidian_vault_dir, self.hugo_content_dir)
-        # We don't want to have the .obsidian folder in the hugo content
-        # directory.
-        if os.path.isdir(os.path.join(self.hugo_content_dir, ".obsidian")):
-            shutil.rmtree(os.path.join(self.hugo_content_dir, ".obsidian"))
+        copytree(self.obsidian_vault_dir, self.hugo_content_dir, ignore=ignore_patterns('.obsidian'))
 
     def process_content(self) -> None:
         """
@@ -63,8 +61,17 @@ class ObsidianToHugo:
             for file in files:
                 if file.endswith(".md"):
                     with open(os.path.join(root, file), "r", encoding="utf-8") as f:
-                        text = f.read()
+                        content = f.read()
+                    # If the file matches any of the filters, delete it.
+                    keep_file = True
+                    for filter in self.filters:
+                        if not filter(content, file):
+                            os.remove(os.path.join(root, file))
+                            keep_file = False
+                            break
+                    if not keep_file:
+                        continue
                     for processor in self.processors:
-                        text = processor(text)
+                        content = processor(content)
                     with open(os.path.join(root, file), "w", encoding="utf-8") as f:
-                        f.write(text)
+                        f.write(content)

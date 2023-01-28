@@ -4,50 +4,81 @@ import subprocess
 from shutil import rmtree, copytree
 from obsidian_to_hugo import ObsidianToHugo
 
+
 class CLITestCase(unittest.TestCase):
     def setUp(self) -> None:
-      """
-      Duplicate ./mocks and all its contents into ./temp 
-      """
-      if os.path.exists("./tests/temp"):
-        rmtree("./tests/temp")
-      copytree("./tests/mocks", "./tests/temp")
+        """
+        Duplicate ./mocks and all its contents into ./temp
+        """
+        if os.path.exists("./tests/temp"):
+            rmtree("./tests/temp")
+        copytree("./tests/mocks", "./tests/temp")
 
-    # def tearDown(self) -> None:
-    #   """
-    #   Remove ./temp
-    #   """
-    #   rmtree("./tests/temp")
-    
+    def tearDown(self) -> None:
+        """
+        Remove ./temp
+        """
+        if os.path.exists("./tests/temp"):
+            rmtree("./tests/temp")
+
     def test_copy(self):
-      """
-      Files inside ./temp/hugo should be the same as ./temp/obsidian
-      ignoring .obsidian directory
-      """
-      subprocess.run("python3 -m obsidian_to_hugo --obsidian-vault-dir=./tests/temp/obsidian --hugo-content-dir=./tests/temp/hugo", shell=True)
-      obsidian_files = os.listdir("./tests/temp/obsidian") 
-      obsidian_files.remove(".obsidian")
-      hugo_files = os.listdir("./tests/temp/hugo")
-      self.assertEqual(obsidian_files, hugo_files)
-    
+        """
+        Files inside ./temp/hugo should be the same as ./temp/obsidian
+        ignoring .obsidian directory
+        """
+        subprocess.run(
+            "python3 -m obsidian_to_hugo --obsidian-vault-dir=./tests/temp/obsidian --hugo-content-dir=./tests/temp/hugo",
+            shell=True,
+        )
+        obsidian_files = os.listdir("./tests/temp/obsidian")
+        obsidian_files.remove(".obsidian")
+        hugo_files = os.listdir("./tests/temp/hugo")
+        self.assertEqual(obsidian_files, hugo_files)
+
+    def test_custom_filter(self):
+        """
+        Instantiate with custom filter function and test it
+        """
+
+        def custom_filter(content: str, path: str) -> bool:
+            return "include" in path
+
+        obsidian_to_hugo = ObsidianToHugo(
+            obsidian_vault_dir="./tests/temp/obsidian",
+            hugo_content_dir="./tests/temp/hugo",
+            filters=[custom_filter],
+        )
+
+        with open("./tests/temp/obsidian/include.md", "w") as f:
+            f.write("abc")
+
+        with open("./tests/temp/obsidian/exclude.md", "w") as f:
+            f.write("xyz")
+
+        obsidian_to_hugo.run()
+
+        self.assertTrue(os.path.exists("./tests/temp/hugo/include.md"))
+        self.assertFalse(os.path.exists("./tests/temp/hugo/exclude.md"))
+
     def test_custom_processor(self):
-      """
-      Instantiate with custom processor function and test it 
-      """
-      def custom_processor(text: str) -> str:
-        return text.replace("abc", "xyz")
-      
-      obsidian_to_hugo = ObsidianToHugo(
-        obsidian_vault_dir="./tests/temp/obsidian",
-        hugo_content_dir="./tests/temp/hugo",
-        processors=[custom_processor]
-      )
+        """
+        Instantiate with custom processor function and test it
+        """
 
-      # create a file with abc in it
-      with open("./tests/temp/obsidian/test.md", "w") as f:
-        f.write("abc")
+        def custom_processor(text: str) -> str:
+            return text.replace("abc", "xyz")
 
-      obsidian_to_hugo.run()
+        obsidian_to_hugo = ObsidianToHugo(
+            obsidian_vault_dir="./tests/temp/obsidian",
+            hugo_content_dir="./tests/temp/hugo",
+            processors=[custom_processor],
+        )
 
-      with open("./tests/temp/hugo/test.md", "r") as f:
-        self.assertEqual(f.read(), "xyz")
+        # create a file with abc in it
+        with open("./tests/temp/obsidian/test.md", "w") as f:
+            f.write("abc")
+
+        obsidian_to_hugo.run()
+
+        with open("./tests/temp/hugo/test.md", "r") as f:
+            self.assertEqual(f.read(), "xyz")
