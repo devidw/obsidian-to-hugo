@@ -24,9 +24,10 @@ It takes care of the following steps:
 - Copies obsidian vault contents into hugo content directory (`.obsidian` gets removed immediately after copying)
 - Replaces obsidian wiki links (`[[wikilink]]`) with hugo shortcode links
   (`[wikilink]({{< ref "wikilink" >}})`)
-- Replaces obsidian marks (`==important==`) with html marks (`<mark>important</mark>`)
-- Want to do more? You can write and register custom processors to do whatever
-  you want with the file contents. See [Processors](#processors) for more
+- Replaces obsidian marks (`==important==`) with HTML marks (`<mark>important</mark>`)
+- Want to do more? You can write and register custom [filters](#filters) to dynamically
+  include/exclude content from processing and [processors](#processors) to do whatever
+  you want with the file contents.
 
 
 ## Replacement examples
@@ -87,6 +88,40 @@ obsidian_to_hugo = ObsidianToHugo(
 
 obsidian_to_hugo.run()
 ```
+
+
+### Filters
+
+You can pass an optional `filters` argument to the `ObsidianToHugo`
+constructor. This argument should be a list of functions.
+
+The function will be invoked for each file from the obsidian vault that is
+copied into the hugo content directory.
+
+Inside the function, you have access to the file path and the file contents.
+
+When the function returns `False`, the file will be skipped and not copied
+into the hugo content directory.
+
+```python
+from obsidian_to_hugo import ObsidianToHugo
+
+def filter_file(file_contents: str, file_path: str) -> bool:
+    # do something with the file path and contents
+    if your_condition:
+        return True # copy file
+    else:
+        return False # skip file
+
+obsidian_to_hugo = ObsidianToHugo(
+    obsidian_vault_dir="path/to/obsidian/vault",
+    hugo_content_dir="path/to/hugo/content",
+    filters=[filter_file],
+)
+
+obsidian_to_hugo.run()
+```
+
 
 ### Processors
 
