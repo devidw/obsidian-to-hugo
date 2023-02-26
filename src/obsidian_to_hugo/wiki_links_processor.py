@@ -2,14 +2,14 @@
 Utilities to extract wiki links from text and turn them into hugo links.
 """
 
-from typing import TypedDict
+from typing import TypedDict, List
 import re
 
 
 WikiLink = TypedDict("WikiLink", {"wiki_link": str, "link": str, "text": str})
 
 
-def get_wiki_links(text: str) -> list[WikiLink]:
+def get_wiki_links(text: str) -> List[WikiLink]:
     """
     Get all wiki links from the given text and return a list of them.
     Each list item is a dictionary with the following keys:
