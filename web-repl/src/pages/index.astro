@@ -86,26 +86,32 @@ const pyEnv = `
         if (!inputEl) {
             return
         }
-        inputEl.addEventListener('input', (e) => {
-            const pyHeadHtml = ` <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />`
-            document.head.insertAdjacentHTML('beforeend', pyHeadHtml)
-            const pyjs = document.createElement('script')
-            pyjs.src = 'https://pyscript.net/alpha/pyscript.js'
-            document.getElementsByTagName('head')[0].appendChild(pyjs)
-        })
+        inputEl.addEventListener(
+            'input',
+            (e) => {
+                const pyHeadHtml = ` <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />`
+                document.head.insertAdjacentHTML('beforeend', pyHeadHtml)
+                const pyjs = document.createElement('script')
+                pyjs.src = 'https://pyscript.net/alpha/pyscript.js'
+                document.getElementsByTagName('head')[0].appendChild(pyjs)
+            },
+            {
+                once: true,
+            },
+        )
     })()
 </script>
 
 <style>
     .card__title {
-        @apply ml-2 mb-2 uppercase text-xs font-bold tracking-wider;
+        --at-apply: ml-2 mb-2 uppercase text-xs font-bold tracking-wider;
     }
 
     .card__content {
-        @apply p-5 rounded-xl w-full h-[200px] text-xs resize-none block outline-none;
+        --at-apply: p-5 rounded-xl w-full h-[200px] text-xs resize-none block outline-none;
     }
 
-    [class*='i-'] {
-        @apply text-2xl opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-pointer;
+    *[class*='i-'] {
+        --at-apply: text-2xl opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-pointer;
     }
 </style>
