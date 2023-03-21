@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Image } from '@astrojs/image/components'
+import imgSrc from '../assets/404.png'
+---
+
+<Layout title="Not Found">
+    <div class="min-h-screen flex justify-center items-center">
+        <div class="text-center">
+            <Image
+                src={imgSrc}
+                alt="Gopher"
+                width={200}
+                height={200}
+                format={'webp'}
+            />
+            <div class="text-slate-4 mt-2">
+                <p>Sorry, I couldn't find that page.</p>
+                <p class="text-sm text-slate-5">
+                    <a class="hover:text-slate-6 transition" href="/"
+                        >Go back home</a
+                    >?
+                </p>
+            </div>
+        </div>
+    </div>
+</Layout>

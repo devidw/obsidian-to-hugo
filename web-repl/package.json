@@ -1,0 +1,23 @@
+{
+  "name": "web-repl",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "redeploy": "netlify deploy --prod",
+    "republish": "pnpm run build && pnpm run redeploy"
+  },
+  "devDependencies": {
+    "@astrojs/image": "^0.3.7",
+    "@iconify-json/simple-icons": "^1.1.47",
+    "astro": "latest",
+    "unocss": "^0.45.30"
+  },
+  "optionalDependencies": {
+    "netlify-cli": "^13.2.0"
+  }
+}

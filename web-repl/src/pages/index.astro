@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Image } from '@astrojs/image/components'
+import imgSrc from '../assets/gopher-obsidian.png'
+
+const demoIn = `[[/some/wiki/link]]
+
+[[/some/wiki/link|Some text]]
+
+[[/some/wiki/link/_index]]`
+
+const demoOut = `[/some/wiki/link]({{< ref "/some/wiki/link" >}})
+
+[Some text]({{< ref "/some/wiki/link" >}})
+
+[/some/wiki/link/_index]({{< ref "/some/wiki/link/" >}})`
+
+const pyEnv = `
+- obsidian-to-hugo
+`
+---
+
+<Layout title="Obsidian to Hugo">
+    <h1 class="sr-only">Obsidian Vault to Hugo Content</h1>
+
+    <div class="min-h-screen flex justify-center items-center">
+        <div
+            class="bg-slate-8 text-slate-3 p-5 rounded-3xl w-[80vw] max-w-2xl font-mono"
+        >
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div class="card">
+                    <div class="card__title">obsidian vault</div>
+                    <textarea
+                        class="card__content bg-slate-6"
+                        id="input"
+                        autofocus
+                        set:text={demoIn}
+                    />
+                </div>
+                <div class="card">
+                    <div class="card__title">hugo content</div>
+                    <!-- only use set:text directive to overgo prettier new line formatting resulting in extra whitespace between textarea tags -->
+                    <textarea
+                        class="card__content bg-slate-7"
+                        id="output"
+                        disabled
+                        set:text={demoOut}
+                    />
+                </div>
+
+                <div class="sm:col-start-1 sm:col-end-3">
+                    <div class="flex justify-end space-x-4">
+                        <a
+                            class="i-simple-icons:pypi"
+                            href="https://pypi.org/project/obsidian-to-hugo/"
+                            target="_blank"></a>
+                        <a
+                            class="i-simple-icons:github"
+                            href="https://github.com/devidw/obsidian-to-hugo"
+                            target="_blank"></a>
+                    </div>
+
+                    <div class="flex justify-start relative">
+                        <Image
+                            src={imgSrc}
+                            width={100}
+                            height={100}
+                            format={'webp'}
+                            class="absolute -bottom-2"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden">
+        <py-env>{pyEnv}</py-env>
+        <py-script src="/script.py"></py-script>
+    </div>
+</Layout>
+
+<script is:inline>
+    ;(() => {
+        const inputEl = document.getElementById('input')
+        if (!inputEl) {
+            return
+        }
+        inputEl.addEventListener('input', (e) => {
+            const pyHeadHtml = ` <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />`
+            document.head.insertAdjacentHTML('beforeend', pyHeadHtml)
+            const pyjs = document.createElement('script')
+            pyjs.src = 'https://pyscript.net/alpha/pyscript.js'
+            document.getElementsByTagName('head')[0].appendChild(pyjs)
+        })
+    })()
+</script>
+
+<style>
+    .card__title {
+        @apply ml-2 mb-2 uppercase text-xs font-bold tracking-wider;
+    }
+
+    .card__content {
+        @apply p-5 rounded-xl w-full h-[200px] text-xs resize-none block outline-none;
+    }
+
+    [class*='i-'] {
+        @apply text-2xl opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-pointer;
+    }
+</style>

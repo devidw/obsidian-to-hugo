@@ -1,0 +1,17 @@
+---
+const { title, description } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="./favicon.png" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+    </head>
+    <body class="m-0 min-h-screen bg-slate-9 text-slate-1">
+        <slot />
+    </body>
+</html>
