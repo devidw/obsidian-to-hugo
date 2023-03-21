@@ -5,8 +5,8 @@ Obsidian to Hugo CLI
 import argparse
 import os
 from .obsidian_to_hugo import ObsidianToHugo
+from obsidian_to_hugo import __version__
 
-__version__ = "12023.02.28"
 
 parser = argparse.ArgumentParser()
 

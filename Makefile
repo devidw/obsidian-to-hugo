@@ -15,7 +15,10 @@ test_e2e: install_locally
 
 test: test_unit test_e2e
 
-build_dist:
+update_calver: install_locally
+	python3 ./scripts/update_calver.py
+
+build_dist: update_calver
 	rm -rf dist
 	python3 -m build
 
